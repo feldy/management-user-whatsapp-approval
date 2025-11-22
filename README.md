@@ -92,6 +92,18 @@ Download `cloudflared` for your OS: [Cloudflare Downloads](https://developers.cl
 
 ### 2. Start Tunnels
 
+**Using Custom Domain (Recommended):**
+We have configured `cloudflared-config.yml` to route both frontend and backend.
+
+**Start Tunnel:**
+```bash
+./cloudflared tunnel --config cloudflared-config.yml run
+```
+
+**Stop Tunnel:**
+- If running in terminal: Press `Ctrl+C`
+- If running in background: `pkill -f cloudflared`
+
 **Expose Frontend (UI):**
 ```bash
 cloudflared tunnel --url http://localhost:3000
