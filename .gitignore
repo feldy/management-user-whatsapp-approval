@@ -1,0 +1,40 @@
+# Java / Maven
+target/
+*.class
+.mvn/
+*.jar
+*.war
+*.ear
+*.log
+
+# IDEs
+.idea/
+.vscode/
+*.iml
+.classpath
+.project
+.settings/
+
+# Node / Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/coverage/
+frontend/.env.local
+frontend/.env.development.local
+frontend/.env.test.local
+frontend/.env.production.local
+
+# Docker Volumes / Data
+postgres_data/
+waha_data/
+.wwebjs_auth/
+.wwebjs_cache/
+
+# System
+.DS_Store
+Thumbs.db
+
+# Local Binaries / Temp
+cloudflared
+cloudflared.tar.gz
+*.log

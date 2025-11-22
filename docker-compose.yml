@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: tanganbaik-db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: tanganbaik
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: tanganbaik-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - db
+
+  waha:
+    image: devlikeapro/waha
+    container_name: tanganbaik-waha
+    ports:
+      - "3001:3000"
+    environment:
+      - WHATSAPP_HOOK_URL=http://172.17.0.1:8185/webhook/whatsapp
+      - WHATSAPP_HOOK_EVENTS=message
+      - WAHA_API_KEY=tanganbaik-secret-key-2025
+    volumes:
+      - waha_data:/app/.wwebjs_auth
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  waha_data:
