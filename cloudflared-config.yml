@@ -1,0 +1,14 @@
+tunnel: 703d4029-ac75-4831-9cc3-c72739bdff24
+credentials-file: /home/feldy/.cloudflared/703d4029-ac75-4831-9cc3-c72739bdff24.json
+
+ingress:
+  # Backend API
+  - hostname: api.efwayapp.web.id
+    service: http://localhost:8185
+  
+  # Frontend UI
+  - hostname: efwayapp.web.id
+    service: http://localhost:3000
+  
+  # Catch-all
+  - service: http_status:404
