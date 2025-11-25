@@ -1,6 +1,17 @@
 import React from 'react';
 
 const DeleteConfirmModal = ({ onConfirm, onCancel }) => {
+    const [isDeleting, setIsDeleting] = React.useState(false);
+
+    const handleConfirm = async () => {
+        setIsDeleting(true);
+        try {
+            await onConfirm();
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
     return (
         <div className="modal-overlay">
             <div className="modal">
@@ -11,11 +22,11 @@ const DeleteConfirmModal = ({ onConfirm, onCancel }) => {
                     Are you sure you want to delete this user? This action cannot be undone.
                 </p>
                 <div className="modal-actions">
-                    <button className="btn" onClick={onCancel}>
+                    <button className="btn" onClick={onCancel} disabled={isDeleting}>
                         Cancel
                     </button>
-                    <button className="btn btn-danger" onClick={onConfirm}>
-                        Delete
+                    <button className="btn btn-danger" onClick={handleConfirm} disabled={isDeleting}>
+                        {isDeleting ? 'Deleting...' : 'Delete'}
                     </button>
                 </div>
             </div>

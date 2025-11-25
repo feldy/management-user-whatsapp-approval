@@ -86,8 +86,14 @@ public class UserService {
     public User rejectUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Delete the user instead of just setting approved=false
+        userRepository.delete(user);
+
+        // Return the user object so we can still send notifications
+        // Note: The user is deleted from DB but the object still exists in memory
         user.setApproved(false);
-        return userRepository.save(user);
+        return user;
     }
 
     public List<User> findPendingUsers() {

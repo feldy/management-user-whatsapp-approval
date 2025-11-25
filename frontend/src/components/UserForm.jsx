@@ -26,9 +26,16 @@ const UserForm = ({ user, onClose, onSave }) => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onSave(formData);
+        setIsSubmitting(true);
+        try {
+            await onSave(formData);
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -36,7 +43,7 @@ const UserForm = ({ user, onClose, onSave }) => {
             <div className="modal">
                 <div className="modal-header">
                     <h2 className="modal-title">{user ? 'Edit User' : 'Add New User'}</h2>
-                    <button className="btn" onClick={onClose} style={{ background: 'none', fontSize: '1.5rem' }}>&times;</button>
+                    <button className="btn" onClick={onClose} disabled={isSubmitting} style={{ background: 'none', fontSize: '1.5rem' }}>&times;</button>
                 </div>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group">
@@ -48,6 +55,7 @@ const UserForm = ({ user, onClose, onSave }) => {
                             value={formData.name}
                             onChange={handleChange}
                             required
+                            disabled={isSubmitting}
                         />
                     </div>
                     <div className="form-group">
@@ -59,6 +67,7 @@ const UserForm = ({ user, onClose, onSave }) => {
                             value={formData.email}
                             onChange={handleChange}
                             required
+                            disabled={isSubmitting}
                         />
                     </div>
                     <div className="form-group">
@@ -72,6 +81,7 @@ const UserForm = ({ user, onClose, onSave }) => {
                             onChange={handleChange}
                             pattern="[0-9]{10,15}"
                             title="Phone number should be 10-15 digits (e.g., 628123456789)"
+                            disabled={isSubmitting}
                         />
                         <small style={{ color: '#666', fontSize: '0.85rem' }}>Format: 628xxxxxxxxx (dengan kode negara)</small>
                     </div>
@@ -84,6 +94,7 @@ const UserForm = ({ user, onClose, onSave }) => {
                             value={formData.password}
                             onChange={handleChange}
                             required={!user}
+                            disabled={isSubmitting}
                         />
                     </div>
                     <div className="form-group">
@@ -93,14 +104,17 @@ const UserForm = ({ user, onClose, onSave }) => {
                             className="form-input"
                             value={formData.role}
                             onChange={handleChange}
+                            disabled={isSubmitting}
                         >
                             <option value="ROLE_USER">User</option>
                             <option value="ROLE_ADMIN">Admin</option>
                         </select>
                     </div>
                     <div className="modal-actions">
-                        <button type="button" className="btn" onClick={onClose}>Cancel</button>
-                        <button type="submit" className="btn btn-primary">Save User</button>
+                        <button type="button" className="btn" onClick={onClose} disabled={isSubmitting}>Cancel</button>
+                        <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
+                            {isSubmitting ? 'Saving...' : 'Save User'}
+                        </button>
                     </div>
                 </form>
             </div>

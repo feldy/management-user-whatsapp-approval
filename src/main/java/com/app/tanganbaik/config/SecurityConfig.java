@@ -67,7 +67,9 @@ public class SecurityConfig {
                 "https://geek-critical-clara-lottery.trycloudflare.com", // Frontend tunnel
                 "https://miss-paper-drop-pipe.trycloudflare.com", // Backend tunnel
                 "https://*.pages.dev", // Cloudflare Pages
-                "https://*.trycloudflare.com" // All Cloudflare tunnels
+                "https://*.trycloudflare.com", // All Cloudflare tunnels
+                "https://efwayapp.web.id", // Custom Domain Frontend
+                "https://api.efwayapp.web.id" // Custom Domain Backend
         ));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));

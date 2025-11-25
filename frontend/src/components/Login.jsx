@@ -23,7 +23,8 @@ const Login = ({ onLogin }) => {
 
         // Try to authenticate by making a test API call
         try {
-            const apiUrl = import.meta.env.VITE_API_URL || '/users';
+            const baseUrl = import.meta.env.VITE_API_URL || '';
+            const apiUrl = baseUrl ? `${baseUrl}/users` : '/users';
             const response = await fetch(apiUrl, {
                 headers: {
                     'Authorization': 'Basic ' + btoa(credentials.email + ':' + credentials.password)
